@@ -36,22 +36,23 @@ const getEmpleado = ( id ) => {
         // condicional moderno
         (empleado)
             ? res(empleado)
-            : (`No existe un empleado con el id ${id}`);
+            : rej(`No existe un empleado con el id ${id}`);
     });
 }
 
 // Tarea: crear el getSalario() con promesas
 const getSalario = (id) => {
-    const salario = salarios.find( (s) => s.id === id)?.salario;
-
+    
     return new Promise((res, rej) => {
+        const salario = salarios.find( (s) => s.id === id)?.salario;
+
         (salario)
         ? res(salario)
         : rej(`No existe el salario con el id ${id}`);
     })
 }
 
-const id = 3;
+const id = 20;
 
 getEmpleado(id)
     // con el then ejecutamos el resolve
@@ -68,7 +69,7 @@ getSalario(id)
 // Para evitar el callback hell, empleamos las promesas en cadena
 
 // creamos una variable para almacenar el valor del empleado, pero más adelante
-// emplearemos otra manera más elegante de resolverlo
+// emplearemos el async y el await para hacerlo de una manera más elegante
 let nombre;
 
 getEmpleado(id)
