@@ -51,7 +51,7 @@ const getSalario = (id) => {
     })
 }
 
-const id = 1;
+const id = 3;
 
 getEmpleado(id)
     // con el then ejecutamos el resolve
@@ -64,3 +64,25 @@ getEmpleado(id)
 getSalario(id)
     .then(console.log)
     .catch(console.log);
+
+// Para evitar el callback hell, empleamos las promesas en cadena
+
+// creamos una variable para almacenar el valor del empleado, pero más adelante
+// emplearemos otra manera más elegante de resolverlo
+let nombre;
+
+getEmpleado(id)
+    .then(empleado => {
+        nombre = empleado;
+        // una vez ejecutado el resolve de getEmpleado, devolvemos la función de getSalario
+        return getSalario(id);
+    })
+    // Y ahora ejecutamos el resolve de getSalario()
+    .then(salario => {
+        console.log(`El empleado ${nombre} con id ${id} tiene un salario de ${salario}`);
+    })
+    // Por último manejamos los errores de ambas promesas. En caso de que una de las dos
+    // nos devuelve un error, nos devolverá el rej de la misma
+    .catch(err => {
+        console.log(err);
+    });
